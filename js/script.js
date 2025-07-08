@@ -167,3 +167,62 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 // Update copyright year automatically
 document.getElementById('current-year').textContent = new Date().getFullYear();
+// पेज लोड होने पर SEO टैग्स अपडेट करें
+document.addEventListener('DOMContentLoaded', function() {
+    // टाइटल अपडेट करें
+    document.title = "Smart Image Compressor - Free Online Tool | Reduce Image Size";
+    
+    // मेटा डिस्क्रिप्शन जोड़ें/अपडेट करें
+    const metaDesc = document.querySelector('meta[name="description"]') || document.createElement('meta');
+    metaDesc.name = "description";
+    metaDesc.content = "Compress JPG, PNG images online without quality loss. Free tool to reduce photo size for websites and social media.";
+    document.head.appendChild(metaDesc);
+    
+    // कैनोनिकल लिंक जोड़ें
+    const canonicalLink = document.querySelector('link[rel="canonical"]') || document.createElement('link');
+    canonicalLink.rel = "canonical";
+    canonicalLink.href = window.location.href.split('?')[0]; // URL पैरामीटर्स हटाकर
+    document.head.appendChild(canonicalLink);
+});
+
+// लेजी लोडिंग इमेजेस के लिए
+function lazyLoadImages() {
+    const images = document.querySelectorAll('img[data-src]');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                observer.unobserve(img);
+            }
+        });
+    });
+    images.forEach(img => observer.observe(img));
+}
+
+window.addEventListener('load', lazyLoadImages);
+// Google Analytics इवेंट ट्रैकिंग
+function trackEvent(action, category, label) {
+    if (typeof gtag !== 'undefined') {
+        gtag('event', action, {
+            'event_category': category,
+            'event_label': label
+        });
+    }
+}
+
+// उदाहरण: जब कोई इमेज कंप्रेस करे
+document.getElementById('compress-btn').addEventListener('click', function() {
+    trackEvent('compress', 'image_processing', 'jpg_compression');
+}); // सोशल शेयरिंग मेटा टैग्स अपडेट करें
+function updateSocialMeta(title, description, imageUrl) {
+    // Facebook/Open Graph
+    document.querySelector('meta[property="og:title"]').content = title;
+    document.querySelector('meta[property="og:description"]').content = description;
+    document.querySelector('meta[property="og:image"]').content = imageUrl;
+    
+    // Twitter
+    document.querySelector('meta[name="twitter:title"]').content = title;
+    document.querySelector('meta[name="twitter:description"]').content = description;
+    document.querySelector('meta[name="twitter:image"]').content = imageUrl;
+}

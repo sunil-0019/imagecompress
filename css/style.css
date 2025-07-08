@@ -686,3 +686,40 @@ h1 {
         padding: 1.5rem 1rem 1rem;
     }
 }
+/* Add to your style.css */
+.btn.loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.btn.loading::after {
+    content: "⏳";
+    position: absolute;
+    right: 1rem;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.seo-footer-content {
+    margin-top: 20px;
+    padding: 15px;
+    background: black;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.seo-footer-content h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.seo-footer-content ul {
+    padding-left: 20px;
+    margin: 10px 0;
+}
